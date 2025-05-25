@@ -34,8 +34,8 @@ This frontend connects to a real backend API to let users:
 ## 📸 Screenshots
 
 <img src="./screenshot.png" alt="App Screenshot" width="600"/>
+<img src="./screenshot2.png" alt="App Screenshot" width="600"/>
 
-> Want to add your own screenshot? Take one and save it as `screenshot.png` in the root folder.
 
 ---
 
