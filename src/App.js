@@ -17,7 +17,7 @@ function App() {
       })
       .catch((err) => console.error("Error fetching books:", err));
   }, []);
-  
+
   const handleUserChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
@@ -40,6 +40,37 @@ function App() {
       .catch((err) => console.error("Error adding user:", err));
   };
 
+  const [newBook, setNewBook] = useState({
+    title: "",
+    genre: "",
+    year: ""
+  });
+  const handleBookChange = (e) => {
+    setNewBook({ ...newBook, [e.target.name]: e.target.value });
+  };
+
+  const handleBookSubmit = (e) => {
+    e.preventDefault();
+
+    fetch("http://localhost:5151/books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ...newBook,
+        year: parseInt(newBook.year) // Make sure year is a number
+      })
+    })
+      .then((res) => res.text())
+      .then((msg) => {
+        alert(msg);
+        setNewBook({ title: "", genre: "", year: "" });
+      })
+      .catch((err) => console.error("Error adding book:", err));
+  };
+
+
   return (
     <div className="App">
       <h1>📚 Library Books</h1>
@@ -58,9 +89,34 @@ function App() {
         <input type="email" name="email" placeholder="Email" value={newUser.email} onChange={handleUserChange} />
         <button type="submit">Add User</button>
       </form>
+      <h2>➕ Add a New Book</h2>
+      <form onSubmit={handleBookSubmit}>
+        <input
+          name="title"
+          placeholder="Book title"
+          value={newBook.title}
+          onChange={handleBookChange}
+        />
+        <input
+          name="genre"
+          placeholder="Genre"
+          value={newBook.genre}
+          onChange={handleBookChange}
+        />
+        <input
+          name="year"
+          placeholder="Year"
+          value={newBook.year}
+          onChange={handleBookChange}
+        />
+        <button type="submit">Add Book</button>
+      </form>
+
     </div>
   );
+
 }
+
 
 export default App;
 
